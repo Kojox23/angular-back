@@ -7,34 +7,21 @@ const { param, body, validationResult } = require("express-validator");
 // Déterminer les règles de validation de la requête
 const muscleValidationRules = () => {
   return [
-    body("firstName")
+    body("muscleName")
       .trim()
       .isLength({ min: 1 })
       .escape()
-      .withMessage("First name must be specified.")
+      .withMessage("Muscle name must be specified.")
       .isAlphanumeric()
-      .withMessage("First name has non-alphanumeric characters."),
+      .withMessage("Muscle name has non-alphanumeric characters."),
 
-    body("lastName")
+    body("exercice")
       .trim()
       .isLength({ min: 1 })
       .escape()
-      .withMessage("Last name must be specified.")
+      .withMessage("exercice name must be specified.")
       .isAlphanumeric()
-      .withMessage("Last name has non-alphanumeric characters."),
-
-    body("class")
-      .trim()
-      .isLength({ min: 1 })
-      .escape()
-      .withMessage("Class must be specified."),
-
-    body("email").isEmail().withMessage("Invalid email"),
-
-    body("dateOfBirth", "Invalid date of birth")
-      .optional({ checkFalsy: true })
-      .isISO8601()
-      .toDate(),
+      .withMessage("exercice name has non-alphanumeric characters."),
   ];
 };
 
@@ -85,11 +72,8 @@ exports.create = [
     // Création de la nouvelle instance de muscle à ajouter
     var muscle = new Muscle({
       _id: req.body.id,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      class: req.body.class,
-      email: req.body.email,
-      dateOfBirth: req.body.dateOfBirth,
+      muscleName: req.body.muscleName,
+      exercice: req.body.exercice,
     });
 
     // Ajout de muscle dans la bdd
@@ -134,11 +118,8 @@ exports.update = [
     // Création de la nouvelle instance de muscle à modifier
     var muscle = new Muscle({
       _id: req.params.id,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      class: req.body.class,
-      email: req.body.email,
-      dateOfBirth: req.body.dateOfBirth,
+      muscleName: req.body.muscleName,
+      exercice: req.body.exercice,
     });
 
     Muscle.findByIdAndUpdate(req.params.id, muscle, function (err, result) {
